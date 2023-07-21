@@ -1,5 +1,5 @@
 class GuitarString
-  attr_accessor :fret, :note
+  attr_reader :fret, :note
 
   def initialize(fret:, note:)
     @fret = fret
