@@ -76,12 +76,12 @@ class ChordFingering
     base_fingering = BASE_FINGERINGS[chord.note]
     modifier = MODIFIERS[chord.type.to_s + chord.extension.to_s]
 
-    modified_chord(base_fingering, modifier).map(&:fret).join
+    modify_chord(base_fingering, modifier).map(&:fret).join
   end
 
   private
 
-  def self.modified_chord(base_fingering, modifier)
+  def self.modify_chord(base_fingering, modifier)
     wanted_string = base_fingering.find {|f| f.note == modifier&.note && modifier&.can_invoke?(f.fret) }
 
     base_fingering.map do |guitar_string|
