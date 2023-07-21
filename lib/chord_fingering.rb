@@ -12,6 +12,22 @@ class ChordFingering
       GuitarString.new(fret: "2", note: :third),
       GuitarString.new(fret: "0", note: :fifth),
     ],
+    "B" => [
+      GuitarString.new(fret: "x", note: nil),
+      GuitarString.new(fret: "2", note: :root),
+      GuitarString.new(fret: "4", note: :fifth),
+      GuitarString.new(fret: "4", note: :root),
+      GuitarString.new(fret: "4", note: :third),
+      GuitarString.new(fret: "2", note: :fifth),
+    ],
+    "C" => [
+      GuitarString.new(fret: "x", note: nil),
+      GuitarString.new(fret: "3", note: :root),
+      GuitarString.new(fret: "2", note: :third),
+      GuitarString.new(fret: "0", note: :fifth),
+      GuitarString.new(fret: "1", note: :root),
+      GuitarString.new(fret: "0", note: :third),
+    ],
     "D" => [
       GuitarString.new(fret: "x", note: nil),
       GuitarString.new(fret: "x", note: nil),
@@ -19,7 +35,31 @@ class ChordFingering
       GuitarString.new(fret: "2", note: :fifth),
       GuitarString.new(fret: "3", note: :root),
       GuitarString.new(fret: "2", note: :third),
-    ]
+    ],
+    "E" => [
+      GuitarString.new(fret: "0", note: :root),
+      GuitarString.new(fret: "2", note: :fifth),
+      GuitarString.new(fret: "2", note: :root),
+      GuitarString.new(fret: "1", note: :third),
+      GuitarString.new(fret: "0", note: :fifth),
+      GuitarString.new(fret: "0", note: :root),
+    ],
+    "F" => [
+      GuitarString.new(fret: "1", note: :root),
+      GuitarString.new(fret: "3", note: :fifth),
+      GuitarString.new(fret: "3", note: :root),
+      GuitarString.new(fret: "2", note: :third),
+      GuitarString.new(fret: "1", note: :fifth),
+      GuitarString.new(fret: "1", note: :root),
+    ],
+    "G" => [
+      GuitarString.new(fret: "3", note: :root),
+      GuitarString.new(fret: "2", note: :third),
+      GuitarString.new(fret: "0", note: :fifth),
+      GuitarString.new(fret: "0", note: :root),
+      GuitarString.new(fret: "0", note: :third),
+      GuitarString.new(fret: "2", note: :root),
+    ],
   }
 
   MODIFIERS = {
