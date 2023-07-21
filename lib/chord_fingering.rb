@@ -30,15 +30,20 @@ class ChordFingering
   def self.generate(chord_string)
     chord = Chord.parse(chord_string)
 
-    base_fingering = BASE_FINGERINGS[chord.note].dup
-    result = base_fingering
+    base_fingering = BASE_FINGERINGS[chord.note]
+    result = base_fingering.dup
 
     if chord.type || chord.extension
       modifier = MODIFIERS[chord.type.to_s + chord.extension.to_s]
 
-      guitar_string = base_fingering.find {|f| f.note == modifier.note && modifier.can_invoke?(f.fret) }
-      index_to_replace = base_fingering.index(guitar_string)
-      result[index_to_replace] = GuitarString.new(fret: modifier.invoke(guitar_string.fret), note: nil)
+      wanted_string = base_fingering.find {|f| f.note == modifier.note && modifier.can_invoke?(f.fret) }
+      result = base_fingering.map.with_index do |guitar_string, index|
+        if index == base_fingering.index(wanted_string)
+          GuitarString.new(fret: modifier.invoke(guitar_string.fret))
+        else
+          guitar_string.dup
+        end
+      end
     end
 
     result.map(&:fret).join
