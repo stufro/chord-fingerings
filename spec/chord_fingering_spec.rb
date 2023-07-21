@@ -33,5 +33,9 @@ RSpec.describe ChordFingering do
     it "doesn't decrement a root below 0" do
       expect(described_class.generate("A7")).to eq "x02020"
     end
+
+    it "decrements the root and the third for a m7 chord" do
+      expect(described_class.generate("Am7")).to eq "x02010"
+    end
   end
 end
