@@ -64,7 +64,11 @@ class ChordFingering
 
   MODIFIERS = {
     "m" => FretModifier.new(note: :third, action: ->(fret) { fret - 1 }),
-    "7" => FretModifier.new(note: :root, action: ->(fret) { fret - 2})
+    "7" => FretModifier.new(note: :root, action: ->(fret) { fret - 2 }),
+    "sus4" => FretModifier.new(note: :third, action: ->(fret) { fret + 1 }),
+    "sus2" => FretModifier.new(note: :third, action: ->(fret) { fret - 2 }),
+    "aug" => FretModifier.new(note: :fifth, action: ->(fret) { fret + 1 }),
+    "dim" => FretModifier.new(note: :fifth, action: ->(fret) { fret - 1 }),
   }
 
   def self.generate(chord_string)
