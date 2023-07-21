@@ -58,7 +58,7 @@ class ChordFingering
       GuitarString.new(fret: "0", note: :fifth),
       GuitarString.new(fret: "0", note: :root),
       GuitarString.new(fret: "0", note: :third),
-      GuitarString.new(fret: "2", note: :root),
+      GuitarString.new(fret: "3", note: :root),
     ],
   }
 
@@ -73,6 +73,7 @@ class ChordFingering
       FretModifier.new(note: :third, action: ->(fret) { fret - 1 }),
       FretModifier.new(note: :root, action: ->(fret) { fret - 2 })
     ],
+    "maj7" => [FretModifier.new(note: :root, action: ->(fret) { fret - 1 })]
   }
 
   def self.generate(chord_string)
@@ -88,7 +89,7 @@ class ChordFingering
 
   def self.modify_chord(base_fingering, modifiers)
     modifier = modifiers.pop
-    wanted_string = base_fingering.find {|f| f.note == modifier&.note && modifier&.can_invoke?(f.fret) }
+    wanted_string = base_fingering.reverse.find {|f| f.note == modifier&.note && modifier&.can_invoke?(f.fret) }
 
     result = base_fingering.map do |guitar_string|
       next(guitar_string) unless guitar_string == wanted_string

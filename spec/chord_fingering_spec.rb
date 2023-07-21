@@ -30,6 +30,10 @@ RSpec.describe ChordFingering do
       expect(described_class.generate("F7")).to eq "131211"
     end
 
+    it "decrements the root for a maj7 chord" do
+      expect(described_class.generate("Gmaj7")).to eq "320002"
+    end
+
     it "doesn't decrement a root below 0" do
       expect(described_class.generate("A7")).to eq "x02020"
     end
