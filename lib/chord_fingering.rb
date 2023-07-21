@@ -1,5 +1,6 @@
 require "./lib/chord"
 require "./lib/guitar_string"
+require "./lib/modifier"
 
 class ChordFingering
   BASE_FINGERINGS = {
@@ -22,8 +23,8 @@ class ChordFingering
   }
 
   MODIFIERS = {
-    "m" => { note: :third, modifier: ->(fret) { fret - 1 } },
-    "7" => { note: :root, modifier: ->(fret) { fret - 2} }
+    "m" => Modifier.new(note: :third, action: ->(fret) { fret - 1 }),
+    "7" => Modifier.new(note: :root, action: ->(fret) { fret - 2})
   }
 
   def self.generate(chord_string)
@@ -35,9 +36,9 @@ class ChordFingering
     if chord.type || chord.extension
       modifier = MODIFIERS[chord.type.to_s + chord.extension.to_s]
 
-      guitar_string = base_fingering.find {|f| f.note == modifier[:note] && can_decrement?(f.fret, modifier[:modifier]) }
+      guitar_string = base_fingering.find {|f| f.note == modifier.note && modifier.can_invoke?(f.fret) }
       index_to_replace = base_fingering.index(guitar_string)
-      result[index_to_replace] = GuitarString.new(fret: modifier[:modifier].call(guitar_string.fret.to_i), note: nil)
+      result[index_to_replace] = GuitarString.new(fret: modifier.invoke(guitar_string.fret), note: nil)
     end
 
     result.map(&:fret).join
