@@ -1,6 +1,6 @@
 require "./lib/chord"
 require "./lib/guitar_string"
-require "./lib/modifier"
+require "./lib/fret_modifier"
 
 class ChordFingering
   BASE_FINGERINGS = {
@@ -23,35 +23,27 @@ class ChordFingering
   }
 
   MODIFIERS = {
-    "m" => Modifier.new(note: :third, action: ->(fret) { fret - 1 }),
-    "7" => Modifier.new(note: :root, action: ->(fret) { fret - 2})
+    "m" => FretModifier.new(note: :third, action: ->(fret) { fret - 1 }),
+    "7" => FretModifier.new(note: :root, action: ->(fret) { fret - 2})
   }
 
   def self.generate(chord_string)
     chord = Chord.parse(chord_string)
-
     base_fingering = BASE_FINGERINGS[chord.note]
-    result = base_fingering.dup
+    modifier = MODIFIERS[chord.type.to_s + chord.extension.to_s]
 
-    if chord.type || chord.extension
-      modifier = MODIFIERS[chord.type.to_s + chord.extension.to_s]
-
-      wanted_string = base_fingering.find {|f| f.note == modifier.note && modifier.can_invoke?(f.fret) }
-      result = base_fingering.map.with_index do |guitar_string, index|
-        if index == base_fingering.index(wanted_string)
-          GuitarString.new(fret: modifier.invoke(guitar_string.fret))
-        else
-          guitar_string.dup
-        end
-      end
-    end
-
-    result.map(&:fret).join
+    modified_chord(base_fingering, modifier).map(&:fret).join
   end
 
   private
 
-  def self.can_decrement?(fret, proc)
-    proc.call(fret.to_i) >= 0
+  def self.modified_chord(base_fingering, modifier)
+    wanted_string = base_fingering.find {|f| f.note == modifier&.note && modifier&.can_invoke?(f.fret) }
+
+    base_fingering.map do |guitar_string|
+      next(guitar_string) unless guitar_string == wanted_string
+
+      GuitarString.new(fret: modifier.invoke(guitar_string.fret))
+    end
   end
 end

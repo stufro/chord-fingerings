@@ -1,4 +1,4 @@
-class Modifier
+class FretModifier
   attr_reader :note, :action
 
   def initialize(note:, action:)
